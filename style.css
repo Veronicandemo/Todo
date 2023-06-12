@@ -2,11 +2,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .app {
   display: grid;
-  width: 100%;
+  width: 110%;
   place-items: center;
 }
 
