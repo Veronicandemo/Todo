@@ -12,7 +12,7 @@ class App {
     this.todos = [];
   }
   addToDo(text) {
-    // if (!text) return;
+    if (!text) return;
     this.todos.push(text);
 
   }
