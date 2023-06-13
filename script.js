@@ -1,10 +1,10 @@
-"use strict";
+// "use strict";
 const toDoInput = document.querySelector("input");
 const toDoButton = document.querySelector("button");
 const toDo = document.querySelectorAll(".list_items-container");
-console.log("THis only runs once");
 
 const todosContainer = document.querySelector("ul");
+toDoInput.focus();
 
 /////////////////////
 class App {
@@ -18,26 +18,34 @@ class App {
   removeToDo(item) {
     console.log("Hey");
     // this.todos.indexOf(toDo)
-    const indexOfItem = this.todos.findIndex((item) => item === item);
+    const indexOfItem = this.todos.findIndex((todo) => todo === item);
     if (indexOfItem !== -1) {
       this.todos.splice(indexOfItem, 1);
     }
     // this.todos = this.todos.filter((todo) => todo !== item);
   }
-  markCompleteTodo() {}
 
   renderTodo() {
-    this.todos.map((todo) => {
+    todosContainer.innerHTML = ""; // Clear the container before rendering
+    this.todos.forEach((todo) => {
       todosContainer.insertAdjacentHTML(
         "afterbegin",
-        `
-      <li>
-          <div class="list_items-container">
-            <h2>${todo}</h2>
-           <button> <ion-icon  name="close-outline" class="remove_button"></ion-icon></button>
-          </div>
-        </li>`
+        `<li>
+            <div class="list_items-container">
+              <h2>${todo}</h2>
+              <button class="remove_button"><ion-icon name="close-outline" ></ion-icon></button>
+            </div>
+          </li>`
       );
+    });
+
+    const removeButtons = document.querySelectorAll(".remove_button");
+    removeButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const item = e.target.parentElement.querySelector("h2").textContent;
+        todo.removeToDo(item);
+        todo.renderTodo();
+      });
     });
   }
 }
@@ -49,20 +57,7 @@ toDoButton.addEventListener("click", (e) => {
   todo.addToDo(toDoInput.value);
   todo.renderTodo();
 });
-// window.addEventListener("DOMContentLoaded", () => {
-//   const removeButton = document.querySelectorAll(".toDo");
-//   console.log(removeButton, "hey");
-//   removeButton.forEach((btn) => {
-//     // button = btn.closest(".remove_button");
-//     btn.addEventListener("click", () => {
-//       console.log("hey");
-//     });
-
-// todosContainer.addEventListener("click", (event) => {
-//   if (event.target.tagName === "toDoButton")
-//     console.log("removeButton", event.target);
-
-// todo.removeToDo(e.target.value);
-// });
-// console.log(removeButton);
-// });
+window.addEventListener("DOMContentLoaded", () => {
+  todo.renderTodo();
+  toDoInput.focus();
+});
